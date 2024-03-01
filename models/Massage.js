@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const HospitalSchema = new mongoose.Schema({
+const MassageSchema = new mongoose.Schema({
     name : {
         type: String,
         required: [true, 'Please add a name'],
@@ -12,42 +12,44 @@ const HospitalSchema = new mongoose.Schema({
         type : String,
         required: [true, 'Please add an address']
     },
+    tel : {
+        type: String
+    },
     district:{
         type : String,
         required: [true, 'Please add a district']
     },
-    province:{
-        type: String,
-        required: [true, 'Please add a province']
-    },
-    postalcode : {
-        type: String,
-        required: [true, 'Please add a postalcode'],
-        maxlength: [5, 'Postal Code cannot be more than 5 digits']
-    },
-    tel : {
-        type: String
-    },
-    region : {
-        type: String,
-        required: [true, 'Please add a region']
-    }
+    open_close_times: [{
+        day: {
+            type: String,
+            required: true
+        },
+        open: {
+            type: String,
+            required: true
+        },
+        close: {
+            type: String,
+            required: true
+        }
+    }]
+
 }, {
     toJSON : {virtuals : true},
     toObject : {virtuals : true}
 });
 
-//cascade delete appointment when a hospital is deleted
-HospitalSchema.pre('deleteOne', {document : true, query : false}, async function(next){
-    console.log(`Appointments being removed from hospital ${this._id}`);
-    await this.model('Appointment').deleteMany({hospital : this._id});
+//cascade delete appointment when a Masssage is deleted
+MassageSchema.pre('deleteOne', {document : true, query : false}, async function(next){
+    console.log(`Appointments being removed from massage ${this._id}`);
+    await this.model('Appointment').deleteMany({massage : this._id});
     next();
 });
 
-HospitalSchema.virtual('appointments', {
+MassageSchema.virtual('appointments', {
     ref : 'Appointment',
     localField : '_id',
-    foreignField : 'hospital',
+    foreignField : 'massage',
     justOne : false
 })
-module.exports = mongoose.model('Hospital', HospitalSchema);
+module.exports = mongoose.model('Massage', MassageSchema);
