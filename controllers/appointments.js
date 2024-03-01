@@ -78,7 +78,7 @@ exports.addAppointment = async(req, res, next) => {
     try {
         req.body.massage = req.params.massageId;
 
-        const massage = await massage.findById(req.params.massageId);
+        const massage = await Massage.findById(req.params.massageId);
 
         if(!massage){
             return res.status(404).json({success : false, message : `No massage shop with the id of ${req.params.massageId}`});
