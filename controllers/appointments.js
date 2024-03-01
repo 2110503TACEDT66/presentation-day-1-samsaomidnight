@@ -12,7 +12,7 @@ exports.getAppointments = async(req,res,next) => {
     if(req.user.role !== 'admin'){
         query = Appointment.find({user:req.user.id}).populate({
             path : 'massage',
-            select : 'name province tel'
+            select : 'name tel'
         });
        
     }
@@ -24,14 +24,14 @@ exports.getAppointments = async(req,res,next) => {
             query = Appointment.find({
                 massage: req.params.massageId}).populate({
                     path : 'massage',
-                    select : 'name province tel'
+                    select : 'name tel'
                 });
             
         }
         else{
             query = Appointment.find().populate({
                 path : 'massage',
-                select : 'name province tel'});
+                select : 'name tel'});
         }
     }
 
