@@ -1,8 +1,8 @@
 const Appointment = require('../models/Appointment');
-const Hospital = require('../models/Hospital');
+const Massage = require('../models/Massage');
 
 //@desc     Get all appointments
-//@route    GET /api/v1/appoiintments
+//@route    GET /api/v1/appointments
 //@access   Public
 
 exports.getAppointments = async(req,res,next) => {
@@ -11,26 +11,26 @@ exports.getAppointments = async(req,res,next) => {
     
     if(req.user.role !== 'admin'){
         query = Appointment.find({user:req.user.id}).populate({
-            path : 'hospital',
+            path : 'massage',
             select : 'name province tel'
         });
        
     }
     
     else{ //if you're an admin, you can see all
-        if(req.params.hospitalId){
-            console.log(req.params.hospitalId);
+        if(req.params.massageId){
+            console.log(req.params.massageId);
 
             query = Appointment.find({
-                hospital: req.params.hospitalId}).populate({
-                    path : 'hospital',
+                massage: req.params.massageId}).populate({
+                    path : 'massage',
                     select : 'name province tel'
                 });
             
         }
         else{
             query = Appointment.find().populate({
-                path : 'hospital',
+                path : 'massage',
                 select : 'name province tel'});
         }
     }
@@ -56,7 +56,7 @@ exports.getAppointments = async(req,res,next) => {
 exports.getAppointment = async(req,res,next)=>{
     try{
         const appointment = await Appointment.findById(req.params.id).populate({
-            path : 'hospital',
+            path : 'massage',
             select : 'name description tel'
         });
 
@@ -76,12 +76,12 @@ exports.getAppointment = async(req,res,next)=>{
 
 exports.addAppointment = async(req, res, next) => {
     try {
-        req.body.hospital = req.params.hospitalId;
+        req.body.massage = req.params.massageId;
 
-        const hospital = await Hospital.findById(req.params.hospitalId);
+        const massage = await massage.findById(req.params.massageId);
 
-        if(!hospital){
-            return res.status(404).json({success : false, message : `No hospital with the id of ${req.params.hospitalId}`});
+        if(!massage){
+            return res.status(404).json({success : false, message : `No massage shop with the id of ${req.params.massageId}`});
         }
 
         //add user id to req.body
@@ -146,7 +146,7 @@ exports.deleteAppointment = async (req, res, next) => {
         }
 
         if(appointment.user.toString() !== req.user.id && req.user.role !== 'admin'){
-            return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to delete this bootcamp`});
+            return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to delete this massage shop`});
         }
 
         await appointment.deleteOne();
