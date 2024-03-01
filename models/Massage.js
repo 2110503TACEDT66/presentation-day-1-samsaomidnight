@@ -15,10 +15,6 @@ const MassageSchema = new mongoose.Schema({
     tel : {
         type: String
     },
-    district:{
-        type : String,
-        required: [true, 'Please add a district']
-    },
     open_close_times: [{
         day: {
             type: String,
