@@ -1,6 +1,6 @@
 
 const express = require('express');
-const {getHospitals, getHospital, createHospitals, updateHospital, deleteHospital, getVacCenters} = require('../controllers/hospitals');
+const {getMassages, getMassage, createMassage, updateMassage, deleteMassage, getVacCenters} = require('../controllers/massages'); //e
 
 /**
 * @swagger
@@ -187,8 +187,8 @@ const {protect, authorize} = require('../middleware/auth');
 
 router.use('/:hospitalId/appointments/', appointmentRouter);
 
-router.route('/').get(getHospitals).post(protect, authorize('admin'), createHospitals);
-router.route('/vacCenters').get(getVacCenters);
-router.route('/:id').get(getHospital).put(protect, authorize('admin'), updateHospital).delete(protect, authorize('admin'), deleteHospital);
+router.route('/').get(getMassages).post(protect, authorize('admin'), createMassage); //e
+router.route('/vacCenters').get(getVacCenters); //e
+router.route('/:id').get(getMassage).put(protect, authorize('admin'), updateMassage).delete(protect, authorize('admin'), deleteMassage); //e
 
 module.exports=router;

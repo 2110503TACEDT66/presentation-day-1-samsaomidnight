@@ -18,7 +18,7 @@ dotenv.config({path:'./config/config.env'});
 connectDB();
 
 //route files
-const hospitals = require('./routes/hospitals');
+const massages = require('./routes/massages'); //e
 const auth = require('./routes/auth');
 const appointments = require('./routes/appointments');
 
@@ -30,7 +30,7 @@ const swaggerOptions = {
         info : {
             title : 'Library API',
             version : '1.0.0',
-            description : 'A simple Express VacQ API'
+            description : 'A simple Express VacQ API' 
         },
         servers : [
             {
@@ -71,7 +71,7 @@ app.use(hpp());
 //Enable CORS
 app.use(cors());
 
-app.use('/api/v1/hospitals', hospitals);
+app.use('/api/v1/massages', massages); //e
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/appointments', appointments);
 
