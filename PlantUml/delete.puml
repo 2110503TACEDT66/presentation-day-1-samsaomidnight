@@ -1,23 +1,24 @@
-@startuml Manage Hospital (Delete)
+
+@startuml Appointment massage (Delete)
 
 header Sameple VacQ Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Hospital (Delete)"
+title "Appointment massage (Delete)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
-participant "<<router>>\n:hospitals" as routerHospitals
-participant "<<controllers>>\n:hospitals" as controllersHospitals
-participant "<<model>>\n:Hospital" as modelHospital
-database "<<MongoDB>>\n:hospitals" as HospitalsDatabase
+participant "<<router>>\n:massages" as routerMassages
+participant "<<controllers>>\n:massages" as controllersMassages
+participant "<<model>>\n:Massage" as modelMassage
+database "<<MongoDB>>\n:massages" as MassagesDatabase
 
-client->server ++:req.delete('/hospitals/:id')
-server->routerHospitals ++:app.use('/hospitals',hospitals)
-routerHospitals -> controllersHospitals ++:deleteHospital()
-controllersHospitals->modelHospital ++:findByIdAndDelete(req.params.id)
-modelHospital ->HospitalsDatabase ++: HospitalSchema
-HospitalsDatabase --> modelHospital --: hospital
-controllersHospitals <-- modelHospital --:hospital
-controllersHospitals->client --:response
+client->server ++:req.put('/massages/:id')
+server->routerMassages ++:app.use('/massages',massages)
+routerMassages -> controllersMassages ++:deleteMassage()
+controllersMassages->modelMassage ++:findByIdAndDelete(req.params.id)
+modelMassage ->MassagesDatabase ++: MassageSchema
+MassagesDatabase --> modelMassage --: massage
+controllersMassages <-- modelMassage --:massage
+controllersMassages->client --:response
 
 @enduml
