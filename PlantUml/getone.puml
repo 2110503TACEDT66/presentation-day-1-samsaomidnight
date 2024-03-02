@@ -3,7 +3,7 @@
 
 header Massage Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Hospital (PUT)"
+title "Appointment massage (GET one)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
