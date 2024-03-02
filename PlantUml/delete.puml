@@ -14,7 +14,7 @@ database "<<MongoDB>>\n:hospitals" as HospitalsDatabase
 client->server ++:req.delete('/hospitals/:id')
 server->routerHospitals ++:app.use('/hospitals',hospitals)
 routerHospitals -> controllersHospitals ++:deleteHospital()
-controllersHospitals->modelHospital ++:delete(req.body)
+controllersHospitals->modelHospital ++:findByIdAndDelete(req.params.id)
 modelHospital ->HospitalsDatabase ++: HospitalSchema
 HospitalsDatabase --> modelHospital --: hospital
 controllersHospitals <-- modelHospital --:hospital

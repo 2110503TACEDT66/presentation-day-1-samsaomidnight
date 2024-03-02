@@ -14,7 +14,7 @@ database "<<MongoDB>>\n:hospitals" as HospitalsDatabase
 client->server ++:req.get('/hospitals')
 server->routerHospitals ++:app.use('/hospitals',hospitals)
 routerHospitals -> controllersHospitals ++:getHospitals()
-controllersHospitals->modelHospital ++:get(req.body)
+controllersHospitals->modelHospital ++:find()
 modelHospital ->HospitalsDatabase ++: HospitalSchema
 HospitalsDatabase --> modelHospital --: hospital
 controllersHospitals <-- modelHospital --:hospital
