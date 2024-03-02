@@ -1,0 +1,43 @@
+@startuml Appointment Massage
+ 
+actor Client
+participant "Express Router" as Router
+participant "Appointment Controller" as Controller
+database "MongoDB" as DB
+
+== Get All Appointments ==
+Client -> Router : GET /api/v1/appointments
+Router -> Controller : getAppointments(req, res, next)
+Controller -> DB : Appointment.find()
+DB -> Controller : appointments[]
+Controller -> Client : JSON Response
+
+== Get Specific Appointment ==
+Client -> Router : GET /api/v1/appointments/:id
+Router -> Controller : getAppointment(req, res, next)
+Controller -> DB : Appointment.findById(req.params.id)
+DB -> Controller : appointment
+Controller -> Client : JSON Response
+
+== Add Appointment ==
+Client -> Router : POST /api/v1/appointments
+Router -> Controller : addAppointment(req, res, next)
+Controller -> DB : Appointment.create(req.body)
+DB -> Controller : appointment
+Controller -> Client : JSON Response
+
+== Update Appointment ==
+Client -> Router : PUT /api/v1/appointments/:id
+Router -> Controller : updateAppointment(req, res, next)
+Controller -> DB : Appointment.findByIdAndUpdate(req.params.id, req.body)
+DB -> Controller : appointment
+Controller -> Client : JSON Response
+
+== Delete Appointment ==
+Client -> Router : DELETE /api/v1/appointments/:id
+Router -> Controller : deleteAppointment(req, res, next)
+Controller -> DB : Appointment.findByIdAndDelete(req.params.id)
+DB -> Controller : 
+Controller -> Client : JSON Response
+
+@enduml

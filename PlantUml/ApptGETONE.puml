@@ -1,0 +1,20 @@
+@startuml  Appointment Massage
+
+header Appointment Massage Diagram
+footer Page %page% of %lastpage%
+title "Appointment Massage (GET ONE)"
+
+actor Client
+participant "Express Router" as Router
+participant "Appointment Controller" as Controller
+database "MongoDB" as DB
+participant "Auth Middleware" as Auth
+
+Client -> Router : GET /api/v1/appointments/:id
+Router -> Auth : protect
+Auth -> Controller : Authorized (Role Check)
+Controller -> DB : Appointment.findById(req.params.id)
+DB -> Controller : appointment
+Controller -> Client : JSON Response
+
+@enduml

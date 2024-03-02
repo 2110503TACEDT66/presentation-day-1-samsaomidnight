@@ -1,0 +1,18 @@
+@startuml Appointment
+
+actor Client
+participant "Express Router" as Router
+participant "Appointment Controller" as Controller
+database "MongoDB" as DB
+participant "Auth Middleware" as Auth
+
+
+Client -> Router : DELETE /api/v1/appointments/:id
+Router -> Auth : protect & authorize('admin', 'user')
+Auth -> Controller : Authorized (Role Check)
+Controller -> DB : Appointment.findByIdAndDelete(req.params.id)
+DB -> Controller : 
+Controller -> Client : 
+
+@enduml
+

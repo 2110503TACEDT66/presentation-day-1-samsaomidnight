@@ -1,0 +1,20 @@
+@startuml Appointment Massage
+
+header Appointment Massage Diagram
+footer Page %page% of %lastpage%
+title "Appointment Massage (PUT)"
+
+actor Client
+participant "Express Router" as Router
+participant "Appointment Controller" as Controller
+database "MongoDB" as DB
+participant "Auth Middleware" as Auth
+
+Client -> Router : PUT /api/v1/appointments/:id
+Router -> Auth : protect & authorize('admin', 'user')
+Auth -> Controller : Authorized (Role Check)
+Controller -> DB : Appointment.findByIdAndUpdate(req.params.id, req.body)
+DB -> Controller : updatedAppointment
+Controller -> Client : JSON Response
+
+@enduml
