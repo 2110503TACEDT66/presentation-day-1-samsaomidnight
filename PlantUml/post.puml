@@ -1,8 +1,8 @@
-@startuml Appointment Massage (POST)
+@startuml Manage Massage (POST)
 
 header Massage Sequence Diagram
 footer Page %page% of %lastpage%
-title "Appointment Massage (POST)"
+title "Manage Massage (POST)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server

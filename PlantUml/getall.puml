@@ -1,9 +1,9 @@
 
-@startuml Appointment massage (GET ALL)
+@startuml Manage massage (GET ALL)
 
 header Massage Sequence Diagram
 footer Page %page% of %lastpage%
-title "Appointment massage (GET ALL)"
+title "Manage massage (GET ALL)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server

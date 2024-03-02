@@ -1,9 +1,9 @@
 
-@startuml Appointment massage (Delete)
+@startuml Manage massage (Delete)
 
 header Massage Sequence Diagram
 footer Page %page% of %lastpage%
-title "Appointment massage (Delete)"
+title "Manage massage (Delete)"
 
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
