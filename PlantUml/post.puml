@@ -1,6 +1,6 @@
 @startuml Appointment Massage (POST)
 
-header Sameple VacQ Sequence Diagram
+header Massage Sequence Diagram
 footer Page %page% of %lastpage%
 title "Appointment Massage (POST)"
 

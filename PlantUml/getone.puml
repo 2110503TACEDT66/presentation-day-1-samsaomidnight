@@ -1,7 +1,7 @@
 
 @startuml Appointment massage (GET one)
 
-header Sameple VacQ Sequence Diagram
+header Massage Sequence Diagram
 footer Page %page% of %lastpage%
 title "Manage Hospital (PUT)"
 
