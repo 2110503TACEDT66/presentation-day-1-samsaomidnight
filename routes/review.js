@@ -19,9 +19,9 @@ router.get('/all', getAllReviews);
 
 
 
-
 // Routes for specific review operations
 router.route('/:id')
+    .get(getReviewsForMassage)
     .put(protect, authorize('admin','user'), updateReview)
     .delete(protect, authorize('admin','user'), deleteReview);
 
