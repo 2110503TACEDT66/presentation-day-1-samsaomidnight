@@ -17,9 +17,11 @@ router.post('/', protect, authorize('admin','user'), addReview);
 // New route for getting all reviews across all massages
 router.get('/all', getAllReviews);
 
+
+
+
 // Routes for specific review operations
 router.route('/:id')
-    .get(protect, getReviewsForMassage) // This might need adjustment based on your description
     .put(protect, authorize('admin','user'), updateReview)
     .delete(protect, authorize('admin','user'), deleteReview);
 
