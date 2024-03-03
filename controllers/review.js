@@ -27,6 +27,29 @@ exports.addReview = async (req, res, next) => {
     }
 };
 
+// GET /api/v1/reviews
+exports.getAllReviews = async (req, res, next) => {
+    try {
+        const reviews = await Review.find().populate({
+            path: 'massage',
+            select: 'name description' // Adjust the fields you're interested in
+        }).populate({
+            path: 'user',
+            select: 'name'
+        });
+
+        res.status(200).json({
+            success: true,
+            count: reviews.length,
+            data: reviews
+        });
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
+        res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
+    }
+};
+
+
 // GET /api/v1/massages/:massageId/reviews
 exports.getReviewsForMassage = async (req, res, next) => {
     try {
@@ -93,7 +116,8 @@ exports.deleteReview = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            data: {}
+            data: {},
+            message: "Review deleted successfully",
         });
     } catch (error) {
         console.error('Error deleting review:', error);

@@ -3,14 +3,24 @@ const { protect, authorize } = require('../middleware/auth');
 const { 
     addReview, 
     getReviewsForMassage, 
+    getAllReviews,
     updateReview, 
     deleteReview 
 } = require('../controllers/review');
 
 const router = express.Router({ mergeParams: true });
 
-router.route('/').post(protect, authorize('admin','user'), addReview);
-router.route('/:id').get(protect, getReviewsForMassage).put(protect, authorize('admin','user'), updateReview).delete(protect, authorize('admin','user'), deleteReview);
+// Route for adding a review to a specific massage
+// Assuming massageId is passed in the route
+router.post('/', protect, authorize('admin','user'), addReview);
 
+// New route for getting all reviews across all massages
+router.get('/all', getAllReviews);
+
+// Routes for specific review operations
+router.route('/:id')
+    .get(protect, getReviewsForMassage) // This might need adjustment based on your description
+    .put(protect, authorize('admin','user'), updateReview)
+    .delete(protect, authorize('admin','user'), deleteReview);
 
 module.exports = router;
