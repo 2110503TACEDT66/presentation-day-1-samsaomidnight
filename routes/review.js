@@ -9,12 +9,8 @@ const {
 
 const router = express.Router({ mergeParams: true });
 
-// Route to get all reviews for a specific massage
-router.get('/', getReviewsForMassage);
+router.route('/').post(protect, authorize('admin','user'), addReview);
+router.route('/:id').get(protect, getReviewsForMassage).put(protect, authorize('admin','user'), updateReview).delete(protect, authorize('admin','user'), deleteReview);
 
-// Routes for adding, updating, and deleting reviews, protected by authentication
-router.post('/', protect, addReview);
-router.put('/:id', protect, updateReview);
-router.delete('/:id', protect, deleteReview);
 
 module.exports = router;
