@@ -8,10 +8,6 @@ const {xss} = require('express-xss-sanitizer');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const cors = require('cors');
-const bodyParser = require('body-parser'); // Added for Stripe webhook handling
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Added Stripe import
-
-
 
 //Load env vars
 dotenv.config({path:'./config/config.env'});
@@ -43,12 +39,10 @@ app.use(helmet());
 app.use(xss());
 
 
-app.use('/api/v1/payments', paymentRoutes);
-
 //rate limiting
 const limiter = rateLimit({
     windowsMs : 10*60*1000, //10 mins
-    max : 100
+    max : 50
 });
 app.use(limiter);
 
@@ -59,10 +53,10 @@ app.use(hpp());
 app.use(cors());
 
 
-
 app.use('/api/v1/massages', massages); 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/appointments', appointments);
+app.use('/api/v1/payments', paymentRoutes);
 
 const PORT = process.env.PORT || 5001;
 const server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, 'mode on port ', PORT));
