@@ -8,6 +8,9 @@ const {xss} = require('express-xss-sanitizer');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 const cors = require('cors');
+const bodyParser = require('body-parser'); // Added for Stripe webhook handling
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Added Stripe import
+
 
 
 //Load env vars
@@ -20,6 +23,7 @@ connectDB();
 const massages = require('./routes/massages'); 
 const auth = require('./routes/auth');
 const appointments = require('./routes/appointments');
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
 
@@ -38,6 +42,9 @@ app.use(helmet());
 //prevent XSS attacks
 app.use(xss());
 
+
+app.use('/api/v1/payments', paymentRoutes);
+
 //rate limiting
 const limiter = rateLimit({
     windowsMs : 10*60*1000, //10 mins
@@ -50,6 +57,8 @@ app.use(hpp());
 
 //Enable CORS
 app.use(cors());
+
+
 
 app.use('/api/v1/massages', massages); 
 app.use('/api/v1/auth', auth);
