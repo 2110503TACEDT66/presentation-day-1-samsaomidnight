@@ -1,5 +1,9 @@
 @startuml Appointment
 
+header Appointment Massage Diagram
+footer Page %page% of %lastpage%
+title "Appointment Massage (DELETE)"
+
 actor Client
 participant "Express Router" as Router
 participant "Appointment Controller" as Controller
