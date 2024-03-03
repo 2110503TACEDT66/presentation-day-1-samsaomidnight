@@ -31,23 +31,24 @@ Appointment "*" -- "1" Massage : books >
 class AuthController {
   +register(req, res, next): void
   +login(req, res, next): void
-  +logout(req, res, next): void
+  -logout(req, res, next): void
+  -getMe(req, res, next): void
 }
 
 class AppointmentsController {
   +getAppointments(req, res, next): void
   +getAppointment(req, res, next): void
-  +addAppointment(req, res, next): void
-  +updateAppointment(req, res, next): void
-  +deleteAppointment(req, res, next): void
+  -addAppointment(req, res, next): void
+  -updateAppointment(req, res, next): void
+  -deleteAppointment(req, res, next): void
 }
 
 class MassagesController {
   +getMassages(req, res, next): void
   +getMassage(req, res, next): void
-  +createMassage(req, res, next): void
-  +updateMassage(req, res, next): void
-  +deleteMassage(req, res, next): void
+  -createMassage(req, res, next): void
+  -updateMassage(req, res, next): void
+  -deleteMassage(req, res, next): void
 }
 
 @enduml
