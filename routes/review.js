@@ -13,7 +13,8 @@ const router = express.Router({ mergeParams: true });
 // Route for adding a review to a specific massage
 // Assuming massageId is passed in the route
 // router.post('/:massageId/reviews',protect, authorize('admin','user'), addReview);
-router.post('/:massageId/reviews',protect, addReview);
+router.post('/:massageId',protect, addReview);
+router.get('/:massageId',protect, getReviewsForMassage);
 
 // New route for getting all reviews across all massages
 router.get('/all', getAllReviews);
@@ -22,7 +23,6 @@ router.get('/all', getAllReviews);
 
 // Routes for specific review operations
 router.route('/:id')
-    .get(getReviewsForMassage)
     .put(protect, authorize('admin','user'), updateReview)
     .delete(protect, authorize('admin','user'), deleteReview);
 
