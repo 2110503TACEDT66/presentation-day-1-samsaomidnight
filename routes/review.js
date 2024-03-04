@@ -17,7 +17,7 @@ router.post('/:massageId',protect, addReview);
 router.get('/:massageId',protect, getReviewsForMassage);
 
 // New route for getting all reviews across all massages
-router.get('/all', getAllReviews);
+router.get('/', getAllReviews);
 
 
 
