@@ -72,7 +72,7 @@ exports.getReviewsForMassage = async (req, res, next) => {
 // PUT /api/v1/reviews/:id
 exports.updateReview = async (req, res, next) => {
     try {
-        let review = await Review.findById(req.params.reviewId);
+        let review = await Review.findById(req.params.id);
 
         if (!review) {
             return res.status(404).json({ success: false, message: "Review not found" });
@@ -101,7 +101,7 @@ exports.updateReview = async (req, res, next) => {
 // DELETE /api/v1/reviews/:id
 exports.deleteReview = async (req, res, next) => {
     try {
-        const review = await Review.findById(req.params.reviewId);
+        const review = await Review.findById(req.params.id);
 
         if (!review) {
             return res.status(404).json({ success: false, message: "Review not found" });
@@ -112,7 +112,7 @@ exports.deleteReview = async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Not authorized to delete this review" });
         }
 
-        await review.remove();
+        await review.deleteOne();
 
         res.status(200).json({
             success: true,
