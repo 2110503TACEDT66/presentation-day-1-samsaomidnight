@@ -32,7 +32,7 @@ exports.getAllReviews = async (req, res, next) => {
     try {
         const reviews = await Review.find().populate({
             path: 'massage',
-            select: 'name description' // Adjust the fields you're interested in
+            select: 'name description' 
         }).populate({
             path: 'user',
             select: 'name'
