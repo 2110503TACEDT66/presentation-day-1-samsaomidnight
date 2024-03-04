@@ -14,7 +14,7 @@ const router = express.Router({ mergeParams: true });
 // Assuming massageId is passed in the route
 // router.post('/:massageId/reviews',protect, authorize('admin','user'), addReview);
 router.post('/:massageId',protect, addReview);
-router.get('/:massageId',protect, getReviewsForMassage);
+router.get('/:massageId', getReviewsForMassage);
 
 // New route for getting all reviews across all massages
 router.get('/', getAllReviews);
