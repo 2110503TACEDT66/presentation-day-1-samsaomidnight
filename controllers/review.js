@@ -53,10 +53,15 @@ exports.getAllReviews = async (req, res, next) => {
 // GET /api/v1/massages/:massageId/reviews
 exports.getReviewsForMassage = async (req, res, next) => {
     try {
-        const reviews = await Review.find({ massage: req.params.massageId }).populate({
-            path: 'user',
-            select: 'name'
-        });
+        const reviews = await Review.find({ massage: req.params.massageId })
+            .populate({
+                path: 'user',
+                select: 'name'
+            })
+            .populate({
+                path: 'massage',
+                select: 'name'
+            });
 
         res.status(200).json({
             success: true,
