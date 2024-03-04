@@ -1,4 +1,3 @@
-
 @startuml Manage massage (Delete)
 
 header Massage Sequence Diagram
@@ -12,13 +11,16 @@ participant "<<controllers>>\n:massages" as controllersMassages
 participant "<<model>>\n:Massage" as modelMassage
 database "<<MongoDB>>\n:massages" as MassagesDatabase
 
-client->server ++:req.put('/massages/:id')
-server->routerMassages ++:app.use('/massages',massages)
-routerMassages -> controllersMassages ++:deleteMassage()
-controllersMassages->modelMassage ++:findByIdAndDelete(req.params.id)
-modelMassage ->MassagesDatabase ++: MassageSchema
-MassagesDatabase --> modelMassage --: massage
-controllersMassages <-- modelMassage --:massage
-controllersMassages->client --:response
+client->server ++: req.delete('/massages/:id')
+server->routerMassages ++: app.use('/massages', massagesRouter)
+routerMassages -> controllersMassages ++: deleteMassage()
+controllersMassages->modelMassage ++: findById(req.params.id)
+modelMassage ->MassagesDatabase ++: find document by _id
+MassagesDatabase --> modelMassage --: massage document
+controllersMassages ->modelMassage ++: deleteOne()
+modelMassage ->MassagesDatabase ++: delete document by _id
+MassagesDatabase --> modelMassage --: deletion result
+controllersMassages <-- modelMassage --: deletion result
+controllersMassages->client --: response (success or error message)
 
 @enduml
