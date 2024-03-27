@@ -4,7 +4,7 @@ const router = express.Router({mergeParams : true});
 
 const {authorize, protect} = require('../middleware/auth');
 
-router.route('/').get(protect, getAppointments).post(addAppointment);
-router.route('/:id').get(getAppointment).put(protect, updateAppointment).delete(deleteAppointment);
+router.route('/').get(getAppointments).post(addAppointment);
+router.route('/:id').get(getAppointment).put(updateAppointment).delete(deleteAppointment);
 
 module.exports = router;
