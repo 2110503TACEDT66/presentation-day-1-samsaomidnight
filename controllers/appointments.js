@@ -87,10 +87,10 @@ exports.addAppointment = async(req, res, next) => {
 
         //add user id to req.body
         //check for existed Appointment
-        const existedAppointment = await Appointment.find({user:req.body.id});
+        const existedAppointment = await Appointment.find({user:req.body.user});
         //if the user is not admin, they can only create 3 appointment
         if(existedAppointment.length >= 3){
-            return res.status(400).json({success : false, message : `The user with ID ${req.body.id} has already made 3 appointments`});
+            return res.status(400).json({success : false, message : `The user with ID ${req.body.user} has already made 3 appointments`});
         }
 
         const appointment = await Appointment.create(req.body);
