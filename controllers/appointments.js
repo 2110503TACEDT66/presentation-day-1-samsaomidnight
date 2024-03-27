@@ -1,3 +1,4 @@
+const AppointmentModel = require('../models/Appointment');
 const Appointment = require('../models/Appointment');
 const Massage = require('../models/Massage');
 
@@ -53,12 +54,12 @@ exports.getAppointments = async(req,res,next) => {
     }
 }
 
+
+
+
 exports.getAppointment = async(req,res,next)=>{
     try{
-        const appointment = await Appointment.findById(req.params.id).populate({
-            path : 'massage',
-            select : 'name description tel'
-        });
+        const appointment = await AppointmentModel.findById(req.params.id);
 
         if(!appointment){
             return res.status(404).json({success: false, message: `No appointment with the id of ${req.params.id}`});
@@ -85,13 +86,12 @@ exports.addAppointment = async(req, res, next) => {
         }
 
         //add user id to req.body
-        // req.body.user = req.user.id;
         //check for existed Appointment
-        const existedAppointment = await Appointment.find({user:req.body.user});
+        const existedAppointment = await Appointment.find({user:req.body.id});
         //if the user is not admin, they can only create 3 appointment
-        // if(existedAppointment.length >= 3 && req.user.role !== 'admin'){
-        //     return res.status(400).json({success : false, message : `The user with ID ${req.body.user} has already made 3 appointments`});
-        // }
+        if(existedAppointment.length >= 3){
+            return res.status(400).json({success : false, message : `The user with ID ${req.body.id} has already made 3 appointments`});
+        }
 
         const appointment = await Appointment.create(req.body);
 
@@ -109,6 +109,7 @@ exports.addAppointment = async(req, res, next) => {
 
 exports.updateAppointment = async(req,res,next) => {
     try {
+        
         let appointment = await Appointment.findById(req.params.id);
 
         if(!appointment){
@@ -136,6 +137,7 @@ exports.updateAppointment = async(req,res,next) => {
 
 exports.deleteAppointment = async (req, res, next) => {
     try{
+        
         const appointment = await Appointment.findById(req.params.id);
 
         if(!appointment){
@@ -145,9 +147,9 @@ exports.deleteAppointment = async (req, res, next) => {
             });
         }
 
-        if(appointment.user.toString() !== req.user.id && req.user.role !== 'admin'){
-            return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to delete this massage shop`});
-        }
+        // if(appointment.user.toString() !== req.user.id && req.user.role !== 'admin'){
+        //     return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to delete this massage shop`});
+        // }
 
         await appointment.deleteOne();
 
@@ -156,10 +158,10 @@ exports.deleteAppointment = async (req, res, next) => {
             data : {}
         });
     } catch (error){
-        console.log(error);
         return res.status(500).json({
             success : false,
-            message : "Cannot delete Appointment"
+            message : "Cannot delete Appointment",
+            error
         });
     }
 }

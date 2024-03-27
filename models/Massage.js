@@ -52,4 +52,5 @@ MassageSchema.virtual('appointments', {
     foreignField : 'massage',
     justOne : false
 })
+
 module.exports = mongoose.model('Massage', MassageSchema);
