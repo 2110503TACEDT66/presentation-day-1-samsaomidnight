@@ -85,13 +85,13 @@ exports.addAppointment = async(req, res, next) => {
         }
 
         //add user id to req.body
-        req.body.user = req.user.id;
+        // req.body.user = req.user.id;
         //check for existed Appointment
-        const existedAppointment = await Appointment.find({user:req.user.id});
+        const existedAppointment = await Appointment.find({user:req.body.user});
         //if the user is not admin, they can only create 3 appointment
-        if(existedAppointment.length >= 3 && req.user.role !== 'admin'){
-            return res.status(400).json({success : false, message : `The user with ID ${req.user.id} has already made 3 appointments`});
-        }
+        // if(existedAppointment.length >= 3 && req.user.role !== 'admin'){
+        //     return res.status(400).json({success : false, message : `The user with ID ${req.body.user} has already made 3 appointments`});
+        // }
 
         const appointment = await Appointment.create(req.body);
 
@@ -116,9 +116,9 @@ exports.updateAppointment = async(req,res,next) => {
         }
 
         //make sure user is the appointment owner 
-        if(appointment.user.toString() !== req.user.id && req.user.role !== 'admin'){
-            return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to update this appointment`});
-        }
+        // if(appointment.user.toString() !== req.user.id && req.user.role !== 'admin'){
+        //     return res.status(401).json({success : false, message : `User ${req.user.id} is not authorized to update this appointment`});
+        // }
 
         appointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {
             new : true,
