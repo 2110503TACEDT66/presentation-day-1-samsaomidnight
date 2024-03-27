@@ -8,33 +8,8 @@ const Massage = require('../models/Massage');
 
 exports.getAppointments = async(req,res,next) => {
     let query;
-    //general users can see only their appointments
     
-    if(req.user.role !== 'admin'){
-        query = Appointment.find({user:req.user.id}).populate({
-            path : 'massage',
-            select : 'name tel'
-        });
-       
-    }
-    
-    else{ //if you're an admin, you can see all
-        if(req.params.massageId){
-            console.log(req.params.massageId);
-
-            query = Appointment.find({
-                massage: req.params.massageId}).populate({
-                    path : 'massage',
-                    select : 'name tel'
-                });
-            
-        }
-        else{
-            query = Appointment.find().populate({
-                path : 'massage',
-                select : 'name tel'});
-        }
-    }
+    query = Appointment.find()
 
     try{
         const appointments = await query;
