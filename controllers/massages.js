@@ -87,6 +87,10 @@ exports.getMassage =async (req,res,next) => {
 exports.createMassage =async (req,res,next) => {
     const massage = await Massage.create(req.body);
     res.status(201).json({success:true, data :massage});
+    
+    if(!massage){
+        return res.status(400).json({success:false});
+    }
 };
 
 
